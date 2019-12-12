@@ -22,10 +22,11 @@ public class StepDefinition {
 	private PageObjects page;
 	
 	@Before()
-	public void startup(){
+	public void startup() throws Exception{
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
 		page = new PageObjects(driver);
+		Excelutils.setExcelFile(Constants.Path_TestData, "Sheet1");
 	
 	}
 	
@@ -33,7 +34,7 @@ public class StepDefinition {
 	public void quit() throws IOException{
 		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(src, new File("D:\\Selenium_mahesh\\images\\screenshot.png"));
-		driver.quit();
+//		driver.quit();
 	}
 	
 	
@@ -105,6 +106,36 @@ public class StepDefinition {
 //		FileUtils.copyFile(src, new File("D:\\Selenium_mahesh\\images\\screenshot.png"));
 ////		
 	}
+	
+	@Given("login to mercury")
+	public void login_to_mercury() {
+		
+	    driver.get(Constants.ulr);	}
+
+	@Then("enter username and password")
+	public void enter_username_and_password() throws Exception {
+	
+		page.sign_on.click();
+		
+		String usernmame = Excelutils.getCellData(1,1);
+		String password = Excelutils.getCellData(1, 2);
+
+		System.out.println("user name is "+usernmame);
+		System.out.println("passowrd is:"+password);
+		
+		Thread.sleep(3000);
+		page.username.sendKeys(usernmame);
+		
+				
+		page.password.sendKeys(password);
+		
+	
+		
+
+		
+	}
+
+
 
 
 
