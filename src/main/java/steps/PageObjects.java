@@ -13,7 +13,7 @@ public class PageObjects {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(name ="username")
+	@FindBy(name ="userName")
 	public WebElement username;
 
 	@FindBy(id ="password")
